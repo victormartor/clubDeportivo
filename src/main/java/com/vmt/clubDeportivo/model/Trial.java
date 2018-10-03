@@ -1,9 +1,13 @@
 package com.vmt.clubDeportivo.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,4 +23,6 @@ public class Trial {
 	
 	private String name;
 	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "trial")
+	private List<Result> results;
 }
