@@ -14,14 +14,14 @@ public class ClubMapperImpl implements ClubMapper{
 	@Override
 	public Club mapToModel(ClubDTO dto) {
 		Club club = new Club();
-		//club.setIdClub(dto.getIdClub());
+		club.setId(dto.getId());
 		club.setName(dto.getName());
 		return club;
 	}
 
 	@Override
 	public ClubDTO mapToDTO(Club model) {
-		return ClubDTO.builder().idClub(model.getId()).name(model.getName()).build();
+		return ClubDTO.builder().id(model.getId()).name(model.getName()).build();
 	}
 
 	@Override
