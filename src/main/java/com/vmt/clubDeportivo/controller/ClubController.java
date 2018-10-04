@@ -53,7 +53,7 @@ public class ClubController {
 	@PutMapping("/{idClub}")
 	public void update(@RequestBody ClubDTO clubToUpdate, @PathVariable Integer idClub) {
 		Club club = mapper.mapToModel(clubToUpdate);
-		club.setIdClub(idClub);
+		//club.setIdClub(idClub);
 		clubService.update(idClub, club);
 	}
 	

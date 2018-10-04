@@ -19,7 +19,7 @@ public class Club {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer idClub;
+	private Integer id;
 	
 	private String name;
 	

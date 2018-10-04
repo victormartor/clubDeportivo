@@ -1,13 +1,13 @@
 package com.vmt.clubDeportivo.model;
 
-import javax.persistence.Column;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToMany;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -15,18 +15,16 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Result {
+public class Point {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
-	private Float seconds;
+	private Integer position;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	private Runner runner;
+	private Integer puntuation;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	private Trial trial;
-	
+	@ManyToMany(fetch = FetchType.LAZY)
+	private List<Trial> trials;
 }
