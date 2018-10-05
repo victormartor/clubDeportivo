@@ -1,12 +1,9 @@
 package com.vmt.clubDeportivo.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vmt.clubDeportivo.dao.TrialDAO;
-import com.vmt.clubDeportivo.model.Point;
 import com.vmt.clubDeportivo.model.Trial;
 
 @Service

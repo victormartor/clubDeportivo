@@ -10,7 +10,6 @@ import com.vmt.clubDeportivo.dto.TrialDTO;
 import com.vmt.clubDeportivo.mapper.TrialMapper;
 import com.vmt.clubDeportivo.model.Trial;
 import com.vmt.clubDeportivo.service.TrialService;
-import com.vmt.clubDeportivo.service.TrialServiceImpl;
 
 @RestController
 @RequestMapping("/trial")
