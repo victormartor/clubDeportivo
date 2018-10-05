@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.vmt.clubDeportivo.dto.ClubDTO;
 import com.vmt.clubDeportivo.dto.RunnerDTO;
 import com.vmt.clubDeportivo.error.NotFoundException;
+import com.vmt.clubDeportivo.mapper.ClubMapper;
 import com.vmt.clubDeportivo.mapper.RunnerMapper;
 import com.vmt.clubDeportivo.model.Runner;
 import com.vmt.clubDeportivo.service.RunnerService;
@@ -29,6 +31,8 @@ public class RunnerController {
 	
 	@Autowired
 	RunnerMapper mapper;
+	@Autowired
+	ClubMapper mapperClub;
 	
 	@GetMapping
 	public List<RunnerDTO> findAll(
@@ -60,6 +64,21 @@ public class RunnerController {
 	@DeleteMapping("/{idRunner}")
 	public void delete(@PathVariable Integer idRunner) {
 		runnerService.delete(idRunner);
+	}
+	
+	@PutMapping("/{idRunner}/club/{idClub}")
+	public void updateClub(@PathVariable Integer idRunner, @PathVariable Integer idClub) {
+		runnerService.updateClub(idRunner, idClub);
+	}
+	
+	@GetMapping("/{idRunner}/club")
+	public ClubDTO getClubByRunner(@PathVariable Integer idRunner) {
+		Runner runner = runnerService.findById(idRunner).orElseThrow(NotFoundException::new);
+		
+		if(runner.getClub() == null) throw new NotFoundException(); 
+			
+		return mapperClub.mapToDTO(runner.getClub());
+		
 	}
 	
 }

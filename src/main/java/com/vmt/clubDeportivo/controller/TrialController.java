@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.vmt.clubDeportivo.dto.TrialDTO;
 import com.vmt.clubDeportivo.mapper.TrialMapper;
 import com.vmt.clubDeportivo.model.Trial;
+import com.vmt.clubDeportivo.service.TrialService;
 import com.vmt.clubDeportivo.service.TrialServiceImpl;
 
 @RestController
@@ -16,7 +17,7 @@ import com.vmt.clubDeportivo.service.TrialServiceImpl;
 public class TrialController {
 
 	@Autowired
-	TrialServiceImpl trialService; 
+	TrialService trialService; 
 	
 	@Autowired
 	TrialMapper mapper;

@@ -18,4 +18,6 @@ public interface RunnerService {
 	void delete(Integer idRunner);
 	
 	List<Runner> findAll(Pageable pagination, String name);
+	
+	void updateClub(Integer idRunner, Integer idClub);
 }

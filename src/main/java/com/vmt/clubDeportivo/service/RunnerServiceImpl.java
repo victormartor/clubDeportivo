@@ -19,6 +19,9 @@ public class RunnerServiceImpl implements RunnerService{
 	@Autowired
 	RunnerDAO dao;
 	
+	@Autowired
+	ClubServiceImpl clubService;
+	
 	@Override
 	public Runner create(Runner runner) {
 		return dao.save(runner);
@@ -44,6 +47,14 @@ public class RunnerServiceImpl implements RunnerService{
 	@Override
 	public List<Runner> findAll(Pageable pagination, String name) {
 		return dao.findByNameContaining(name, pagination).getContent();
+	}
+
+	@Override
+	public void updateClub(Integer idRunner, Integer idClub) {
+		
+		Runner runner = dao.findById(idRunner).orElseThrow(NotFoundException::new);
+		runner.setClub(clubService.findById(idClub).orElseThrow(NotFoundException::new));
+		dao.save(runner);
 	}
 
 }

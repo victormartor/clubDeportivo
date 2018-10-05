@@ -1,5 +1,7 @@
 package com.vmt.clubDeportivo.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,5 +18,12 @@ public class ClubServiceImpl implements ClubService{
 	public Club create(Club club) {
 		return dao.save(club);
 	}
+
+	@Override
+	public Optional<Club> findById(Integer idClub) {
+		return dao.findById(idClub);
+	}
+	
+	
 
 }
