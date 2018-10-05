@@ -17,4 +17,7 @@ public interface TrialService {
 	
 	List<Trial> findAll();
 	
+	//Clasificaciones por categorias
+	List<Result> getMaster(Integer idTrial, Integer category);
+	
 }

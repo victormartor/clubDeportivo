@@ -46,13 +46,23 @@ public class TrialServiceImpl implements TrialService{
 
 	@Override
 	public List<Result> getResults(Integer idTrial) {
-		final Trial trial = dao.findById(idTrial).orElseThrow(NotFoundException::new);
+		final Trial trial = this.findById(idTrial);
 		return trial.getResults();
 	}
 
 	@Override
 	public List<Trial> findAll() {
 		return dao.findAll();
+	}
+
+	//Clasificacion por categorias
+	@Override
+	public List<Result> getMaster(Integer idTrial, Integer category) {
+		final Trial trial = this.findById(idTrial);
+		
+		//llamada a funcion group by segun la categoria
+		
+		return null;
 	}
 
 }

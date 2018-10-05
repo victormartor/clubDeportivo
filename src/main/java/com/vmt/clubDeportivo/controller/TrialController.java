@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vmt.clubDeportivo.dto.ResultDTO;
@@ -48,6 +49,16 @@ public class TrialController {
 	@PostMapping("/{idTrial}/result")
 	public ResultDTO insertResult(@PathVariable Integer idTrial, @RequestBody ResultDTO result) {
 		return mapperResult.mapToDTO(trialService.insertResult(idTrial, mapperResult.mapToModel(result)));
+	}
+	
+	//Clasificaciones por categorias
+	@GetMapping("/{idTrial}/master")
+	public List<ResultDTO> getMaster(@PathVariable Integer idTrial,
+			@RequestParam(value = "cat", required = true) Integer category){
+		
+		//llamada a funcion segun la categoria
+		
+		return null;
 	}
 	
 }
