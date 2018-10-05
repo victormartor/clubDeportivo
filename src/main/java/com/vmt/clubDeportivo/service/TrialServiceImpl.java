@@ -1,5 +1,6 @@
 package com.vmt.clubDeportivo.service;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +42,17 @@ public class TrialServiceImpl implements TrialService{
 	@Override
 	public Trial findById(Integer idTrial) {
 		return dao.findById(idTrial).orElseThrow(NotFoundException::new);
+	}
+
+	@Override
+	public List<Result> getResults(Integer idTrial) {
+		final Trial trial = dao.findById(idTrial).orElseThrow(NotFoundException::new);
+		return trial.getResults();
+	}
+
+	@Override
+	public List<Trial> findAll() {
+		return dao.findAll();
 	}
 
 }

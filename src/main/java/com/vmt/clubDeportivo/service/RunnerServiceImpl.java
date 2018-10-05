@@ -51,7 +51,7 @@ public class RunnerServiceImpl implements RunnerService{
 	public void updateClub(Integer idRunner, Integer idClub) {
 		
 		Runner runner = dao.findById(idRunner).orElseThrow(NotFoundException::new);
-		runner.setClub(clubService.findById(idClub).orElseThrow(NotFoundException::new));
+		runner.setClub(clubService.findById(idClub));
 		dao.save(runner);
 	}
 

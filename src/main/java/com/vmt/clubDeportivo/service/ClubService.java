@@ -8,6 +8,6 @@ public interface ClubService {
 
 	Club create(Club club);
 	
-	Optional<Club> findById(Integer idClub);
+	Club findById(Integer idClub);
 	
 }
