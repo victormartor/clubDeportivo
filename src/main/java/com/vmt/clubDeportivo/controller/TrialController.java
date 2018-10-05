@@ -24,7 +24,7 @@ public class TrialController {
 	
 	@PostMapping
 	public TrialDTO create(@RequestBody TrialDTO trialToCreate) {
-		Trial trial = mapper.mapToModel(trialToCreate);
+		final Trial trial = mapper.mapToModel(trialToCreate);
 		return mapper.mapToDTO(trialService.create(trial));
 	}
 	

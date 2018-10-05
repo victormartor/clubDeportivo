@@ -50,13 +50,13 @@ public class RunnerController {
 	
 	@PostMapping
 	public RunnerDTO create(@RequestBody RunnerDTO runnerToCreate) {
-		Runner runner = mapper.mapToModel(runnerToCreate);
+		final Runner runner = mapper.mapToModel(runnerToCreate);
 		return mapper.mapToDTO(runnerService.create(runner));
 	}
 	
 	@PutMapping("/{idRunner}")
 	public void update(@RequestBody RunnerDTO runnerToUpdate, @PathVariable Integer idRunner) {
-		Runner runner = mapper.mapToModel(runnerToUpdate);
+		final Runner runner = mapper.mapToModel(runnerToUpdate);
 		runner.setId(idRunner);
 		runnerService.update(idRunner, runner);
 	}
@@ -73,7 +73,7 @@ public class RunnerController {
 	
 	@GetMapping("/{idRunner}/club")
 	public ClubDTO getClubByRunner(@PathVariable Integer idRunner) {
-		Runner runner = runnerService.findById(idRunner).orElseThrow(NotFoundException::new);
+		final Runner runner = runnerService.findById(idRunner).orElseThrow(NotFoundException::new);
 		
 		if(runner.getClub() == null) throw new NotFoundException(); 
 			

@@ -23,7 +23,7 @@ public class ClubController {
 	
 	@PostMapping
 	public ClubDTO create(@RequestBody ClubDTO clubToCreate) {
-		Club club = mapper.mapToModel(clubToCreate);
+		final Club club = mapper.mapToModel(clubToCreate);
 		return mapper.mapToDTO(clubService.create(club));
 	}
 	
