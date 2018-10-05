@@ -3,6 +3,8 @@ package com.vmt.clubDeportivo.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Pageable;
+
 import com.vmt.clubDeportivo.model.Runner;
 
 public interface RunnerService {
@@ -15,5 +17,5 @@ public interface RunnerService {
 	
 	void delete(Integer idRunner);
 	
-	List<Runner> findAll();
+	List<Runner> findAll(Pageable pagination, String name);
 }

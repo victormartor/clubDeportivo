@@ -33,6 +33,6 @@ public class Trial {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "trial")
 	private List<Result> results;
 	
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "trials")
+	@ManyToMany(fetch = FetchType.LAZY)
 	private List<Point> points;
 }

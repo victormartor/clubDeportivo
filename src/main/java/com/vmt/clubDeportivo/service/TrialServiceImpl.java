@@ -21,10 +21,12 @@ public class TrialServiceImpl implements TrialService{
 	@Override
 	public Trial create(Trial trial) {
 		
-		//Asignar puntuaje para la prueba
-		trial.setPoints(pointService.findAll());
+		Trial trialCreated = dao.save(trial);
 		
-		return dao.save(trial);
+		//Asignar puntuaje para la prueba
+		trialCreated.setPoints(pointService.findAll());
+		
+		return dao.save(trialCreated);
 	}
 
 }

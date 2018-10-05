@@ -25,6 +25,6 @@ public class Point {
 	
 	private Integer puntuation;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "points")
 	private List<Trial> trials;
 }
