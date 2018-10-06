@@ -63,20 +63,21 @@ public class TrialServiceImpl implements TrialService{
 	@Override
 	public List<Result> getMaster(Integer idTrial, Integer category) {
 		final Trial trial = this.findById(idTrial);
+		final Integer trialYear = Integer.parseInt(trial.getDate().toString().substring(0, 4));
 		
 		//llamada a funcion group by segun la categoria
 		List<Result> results = new ArrayList<>();
 		switch(category) {
 		case 40:
-			results = dao.getMaster40(trial);
+			results = dao.getMaster40(trial, trialYear);
 			break;
 			
 		case 30:
-			results = dao.getMaster30(trial);
+			results = dao.getMaster30(trial, trialYear);
 			break;
 			
 		case 20:
-			results = dao.getMaster20(trial);
+			results = dao.getMaster20(trial, trialYear);
 			break;
 			
 		default:
