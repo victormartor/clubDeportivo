@@ -2,6 +2,7 @@ package com.vmt.clubDeportivo.service;
 
 import java.util.List;
 
+import com.vmt.clubDeportivo.model.ClubPointsDTO;
 import com.vmt.clubDeportivo.model.Result;
 import com.vmt.clubDeportivo.model.Trial;
 
@@ -19,5 +20,8 @@ public interface TrialService {
 	
 	//Clasificaciones por categorias
 	List<Result> getMaster(Integer idTrial, Integer category);
+	
+	//Clasificacion de clubs por puntos
+	List<ClubPointsDTO> getClubClasi();
 	
 }

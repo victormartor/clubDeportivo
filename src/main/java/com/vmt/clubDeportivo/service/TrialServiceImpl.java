@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.vmt.clubDeportivo.dao.TrialDAO;
 import com.vmt.clubDeportivo.error.NotFoundException;
+import com.vmt.clubDeportivo.model.ClubPointsDTO;
 import com.vmt.clubDeportivo.model.Result;
 import com.vmt.clubDeportivo.model.Trial;
 
@@ -65,15 +66,15 @@ public class TrialServiceImpl implements TrialService{
 		List<Result> results = new ArrayList<>();
 		switch(category) {
 		case 40:
-			results = dao.getMaster40();
+			results = dao.getMaster40(trial);
 			break;
 			
 		case 30:
-			results = dao.getMaster30();
+			results = dao.getMaster30(trial);
 			break;
 			
 		case 20:
-			results = dao.getMaster20();
+			results = dao.getMaster20(trial);
 			break;
 			
 		default:
@@ -81,6 +82,13 @@ public class TrialServiceImpl implements TrialService{
 		}
 		
 		return results;
+	}
+
+	//Clasificacion de los clubs por puntos
+	@Override
+	public List<ClubPointsDTO> getClubClasi() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
