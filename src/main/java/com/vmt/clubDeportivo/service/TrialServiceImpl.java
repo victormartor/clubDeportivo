@@ -1,5 +1,10 @@
 package com.vmt.clubDeportivo.service;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.vmt.clubDeportivo.dao.TrialDAO;
 import com.vmt.clubDeportivo.dto.ClubPointsDTO;
+import com.vmt.clubDeportivo.error.FileException;
 import com.vmt.clubDeportivo.error.NotFoundException;
 import com.vmt.clubDeportivo.mapper.ClubPointsMapper;
 import com.vmt.clubDeportivo.model.Club;
@@ -117,6 +123,7 @@ public class TrialServiceImpl implements TrialService{
 		puntuationList.sort((a,b) -> a.getPoints() > b.getPoints() ? -1 : a.getPoints() == b.getPoints() ? 0 : 1);
 		
 		//Guardar en fichero
+		writeFile(puntuationList);
 		
 		return puntuationList;
 	}
@@ -141,6 +148,25 @@ public class TrialServiceImpl implements TrialService{
 		}
 		
 		return puntuation;
+	}
+	
+	//Guardar lista de clubs en un fichero
+	private void writeFile(List<ClubPointsDTO> clubs) {
+		FileWriter file = null;
+		try {
+
+			file = new FileWriter("clubs.txt");
+
+			// Escribimos linea a linea en el fichero
+			file.write("CLUB\tPUNTOS\n");
+			for(ClubPointsDTO c : clubs)
+				file.write(c.getName()+"\t"+c.getPoints()+"\n");
+
+			file.close();
+
+		} catch (Exception ex) {
+			throw new FileException();
+		}
 	}
 	
 
