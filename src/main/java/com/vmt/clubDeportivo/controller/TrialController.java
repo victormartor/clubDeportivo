@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.vmt.clubDeportivo.dto.ClubPointsDTO;
 import com.vmt.clubDeportivo.dto.ResultDTO;
 import com.vmt.clubDeportivo.dto.TrialDTO;
 import com.vmt.clubDeportivo.mapper.ResultMapper;
@@ -65,6 +66,12 @@ public class TrialController {
 	@GetMapping("/{idTrial}/master20")
 	public List<ResultDTO> getMaster20(@PathVariable Integer idTrial){
 		return mapperResult.mapToDTO(trialService.getMaster(idTrial, 20));
+	}
+	
+	//Clasificacion de los clubs por puntos
+	@GetMapping("/{idTrial}/clubClasi")
+	public List<ClubPointsDTO> getClubClasi(@PathVariable Integer idTrial){
+		return trialService.getClubClasi(idTrial);
 	}
 	
 }

@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vmt.clubDeportivo.dao.TrialDAO;
+import com.vmt.clubDeportivo.dto.ClubPointsDTO;
 import com.vmt.clubDeportivo.error.NotFoundException;
-import com.vmt.clubDeportivo.model.ClubPointsDTO;
+import com.vmt.clubDeportivo.model.Club;
+import com.vmt.clubDeportivo.model.Point;
 import com.vmt.clubDeportivo.model.Result;
 import com.vmt.clubDeportivo.model.Trial;
 
@@ -86,9 +88,39 @@ public class TrialServiceImpl implements TrialService{
 
 	//Clasificacion de los clubs por puntos
 	@Override
-	public List<ClubPointsDTO> getClubClasi() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ClubPointsDTO> getClubClasi(Integer idTrial) {
+		final Trial trial = this.findById(idTrial);
+		
+		List<Point> points = trial.getPoints();	//sistema de puntuaje de la prueba
+		//Ordenar el sistema de puntuaje por la posicion
+		points.sort((a,b) -> a.getPosition() < b.getPosition() ? -1 : a.getPosition() == b.getPosition() ? 0 : 1);
+		
+		List<Result> results = trial.getResults();
+		//ordenar los resultados de la prueba por segundos
+		results.sort((a,b) -> a.getSeconds() < b.getSeconds() ? -1 : a.getSeconds() == b.getSeconds() ? 0 : 1);
+
+		//Asignar puntuacion segun la clasificacion de la prueba
+		List<ClubPointsDTO> puntuation = setPuntuation(points, results);
+		
+		//Guardar en fichero
+		
+		return puntuation;
 	}
+	
+	//Asignar puntuacion segun la clasificacion
+	private List<ClubPointsDTO> setPuntuation(List<Point> points, List<Result> results){
+		
+		List<ClubPointsDTO> puntuation = new ArrayList<>();
+		
+		for(Integer i = 0; i<points.size(); i++) {
+			Club club = results.get(i).getRunner().getClub();
+			
+			
+		}
+		
+		return puntuation;
+	}
+	
+	//Comprobar si un club esta añadido a la lista de clubs
 
 }
