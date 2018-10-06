@@ -1,13 +1,17 @@
 package com.vmt.clubDeportivo.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vmt.clubDeportivo.dao.TrialDAO;
 import com.vmt.clubDeportivo.dto.ClubPointsDTO;
 import com.vmt.clubDeportivo.error.NotFoundException;
+import com.vmt.clubDeportivo.mapper.ClubPointsMapper;
 import com.vmt.clubDeportivo.model.Club;
 import com.vmt.clubDeportivo.model.Point;
 import com.vmt.clubDeportivo.model.Result;
@@ -24,6 +28,9 @@ public class TrialServiceImpl implements TrialService{
 	
 	@Autowired
 	ResultService resultService;
+	
+	@Autowired
+	ClubPointsMapper mapperClubPoints;
 	
 	@Override
 	public Trial create(Trial trial) {
@@ -101,27 +108,40 @@ public class TrialServiceImpl implements TrialService{
 		results.sort((a,b) -> a.getSeconds() < b.getSeconds() ? -1 : a.getSeconds() == b.getSeconds() ? 0 : 1);
 
 		//Asignar puntuacion segun la clasificacion de la prueba
-		List<ClubPointsDTO> puntuation = setPuntuation(points, results);
+		Map<String, Integer> puntuation = setPuntuation(points, results);
+		
+		//Convertir en una lista
+		List<ClubPointsDTO> puntuationList = mapperClubPoints.mapToDTO(puntuation);
+		
+		//Ordenar la lista de clubs segun la puntuacion
+		puntuationList.sort((a,b) -> a.getPoints() > b.getPoints() ? -1 : a.getPoints() == b.getPoints() ? 0 : 1);
 		
 		//Guardar en fichero
 		
-		return puntuation;
+		return puntuationList;
 	}
 	
 	//Asignar puntuacion segun la clasificacion
-	private List<ClubPointsDTO> setPuntuation(List<Point> points, List<Result> results){
+	private Map<String, Integer> setPuntuation(List<Point> points, List<Result> results){
 		
-		List<ClubPointsDTO> puntuation = new ArrayList<>();
+		Map<String, Integer> puntuation = new HashMap<>();
 		
 		for(Integer i = 0; i<points.size(); i++) {
-			Club club = results.get(i).getRunner().getClub();
+			Result result = results.get(i);
 			
-			
+			if(result != null) {
+				String clubName = result.getRunner().getClub().getName();
+				Integer clubPoints = points.get(i).getPuntuation();
+				
+				if(puntuation.containsKey(clubName))
+					puntuation.put(clubName, puntuation.get(clubName)+clubPoints);
+				else
+					puntuation.put(clubName, clubPoints);
+			}	
 		}
 		
 		return puntuation;
 	}
 	
-	//Comprobar si un club esta añadido a la lista de clubs
 
 }
