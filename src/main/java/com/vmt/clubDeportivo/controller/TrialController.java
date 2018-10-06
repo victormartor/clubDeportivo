@@ -52,13 +52,19 @@ public class TrialController {
 	}
 	
 	//Clasificaciones por categorias
-	@GetMapping("/{idTrial}/master")
-	public List<ResultDTO> getMaster(@PathVariable Integer idTrial,
-			@RequestParam(value = "cat", required = true) Integer category){
-		
-		//llamada a funcion segun la categoria
-		
-		return null;
+	@GetMapping("/{idTrial}/master40")
+	public List<ResultDTO> getMaster40(@PathVariable Integer idTrial){
+		return mapperResult.mapToDTO(trialService.getMaster(idTrial, 40));
+	}
+	
+	@GetMapping("/{idTrial}/master30")
+	public List<ResultDTO> getMaster30(@PathVariable Integer idTrial){
+		return mapperResult.mapToDTO(trialService.getMaster(idTrial, 30));
+	}
+	
+	@GetMapping("/{idTrial}/master20")
+	public List<ResultDTO> getMaster20(@PathVariable Integer idTrial){
+		return mapperResult.mapToDTO(trialService.getMaster(idTrial, 20));
 	}
 	
 }

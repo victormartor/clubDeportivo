@@ -1,5 +1,6 @@
 package com.vmt.clubDeportivo.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,8 +62,25 @@ public class TrialServiceImpl implements TrialService{
 		final Trial trial = this.findById(idTrial);
 		
 		//llamada a funcion group by segun la categoria
+		List<Result> results = new ArrayList<>();
+		switch(category) {
+		case 40:
+			results = dao.getMaster40();
+			break;
+			
+		case 30:
+			results = dao.getMaster30();
+			break;
+			
+		case 20:
+			results = dao.getMaster20();
+			break;
+			
+		default:
+			throw new NotFoundException();
+		}
 		
-		return null;
+		return results;
 	}
 
 }

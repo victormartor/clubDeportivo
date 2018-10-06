@@ -27,7 +27,7 @@ public class TrialMapperImpl implements TrialMapper{
 	@Override
 	public TrialDTO mapToDTO(Trial model) {
 		return TrialDTO.builder().id(model.getId()).name(model.getName())
-				.date(model.getDate().toString().replace('-', '/')).build();
+				.date(model.getDate().toString().substring(0, 10).replace('-', '/')).build();
 	}
 
 	@Override
