@@ -23,6 +23,6 @@ public interface TrialService {
 	List<Result> getMaster(Integer idTrial, Integer category);
 	
 	//Clasificacion de clubs por puntos
-	List<ClubPointsDTO> getClubClasi(Integer idTrial);
+	List<ClubPointsDTO> getClubClasi(Integer idTrial, Boolean useCat);
 	
 }

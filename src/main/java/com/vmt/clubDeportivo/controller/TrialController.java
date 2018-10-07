@@ -69,10 +69,16 @@ public class TrialController {
 		return mapperResult.mapToDTO(trialService.getMaster(idTrial, 20));
 	}
 	
-	//Clasificacion de los clubs por puntos
+	//Clasificacion de los clubs por puntos sin tener en cuenta las categorias
 	@GetMapping("/{idTrial}/clubClasi")
 	public List<ClubPointsDTO> getClubClasi(@PathVariable Integer idTrial){
-		return trialService.getClubClasi(idTrial);
+		return trialService.getClubClasi(idTrial, false);
 	}
+	
+	//Clasificacion de los clubs por puntos teniendo en cuenta las categorias
+		@GetMapping("/{idTrial}/clubClasiCat")
+		public List<ClubPointsDTO> getClubClasiCat(@PathVariable Integer idTrial){
+			return trialService.getClubClasi(idTrial, true);
+		}
 	
 }

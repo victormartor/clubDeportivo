@@ -102,19 +102,20 @@ public class TrialServiceImpl implements TrialService{
 
 	//Clasificacion de los clubs por puntos
 	@Override
-	public List<ClubPointsDTO> getClubClasi(Integer idTrial) {
+	public List<ClubPointsDTO> getClubClasi(Integer idTrial, Boolean useCat) {
 		final Trial trial = this.findById(idTrial);
 		
 		List<Point> points = trial.getPoints();	//sistema de puntuaje de la prueba
 		//Ordenar el sistema de puntuaje por la posicion
 		points.sort((a,b) -> a.getPosition() < b.getPosition() ? -1 : a.getPosition() == b.getPosition() ? 0 : 1);
 		
-		List<Result> results = trial.getResults();
-		//ordenar los resultados de la prueba por segundos
-		results.sort((a,b) -> a.getSeconds() < b.getSeconds() ? -1 : a.getSeconds() == b.getSeconds() ? 0 : 1);
-
-		//Asignar puntuacion segun la clasificacion de la prueba
-		Map<String, Integer> puntuation = setPuntuation(points, results);
+		//Obtener puntuaciones de los clubs teniendo en cuenta la categoria o no
+		Map<String, Integer> puntuation = new HashMap<>();
+		
+		if(useCat)
+			puntuation = getPuntuationCat(points, trial);
+		else
+			puntuation = getPuntuation(points, trial);
 		
 		//Convertir en una lista
 		List<ClubPointsDTO> puntuationList = mapperClubPoints.mapToDTO(puntuation);
@@ -128,16 +129,48 @@ public class TrialServiceImpl implements TrialService{
 		return puntuationList;
 	}
 	
+	//Utilizar los resultados de la prueba sin dividir por categorias
+	private Map<String, Integer> getPuntuation(List<Point> points, Trial trial){
+		//Resultados de la prueba sin dividir por categorias
+		List<Result> results = trial.getResults();
+		//ordenar los resultados de la prueba por segundos
+		results.sort((a,b) -> a.getSeconds() < b.getSeconds() ? -1 : a.getSeconds() == b.getSeconds() ? 0 : 1);
+		
+		return setPuntuation(points, results);
+	}
+	
+	//Utilizar los resultados de la prueba dividiendo por categorias
+		private Map<String, Integer> getPuntuationCat(List<Point> points, Trial trial){
+			
+			//Categoria master40
+			Map<String, Integer> puntuation = setPuntuation(points, this.getMaster(trial.getId(), 40));
+			 
+			//Categoria master30
+			Map<String, Integer> puntuationMaster30 = setPuntuation(points, this.getMaster(trial.getId(), 30));
+			//unir los dos maps
+			puntuationMaster30.forEach((k, v) -> {
+				puntuation.merge(k, v, (v1, v2) -> v1 += v2);
+			});
+			
+			//Categoria master20
+			Map<String, Integer> puntuationMaster20 = setPuntuation(points, this.getMaster(trial.getId(), 20));
+			//unir los dos maps
+			puntuationMaster20.forEach((k, v) -> {
+				puntuation.merge(k, v, (v1, v2) -> v1 += v2);
+			});
+			
+			
+			return puntuation;
+		}
+	
 	//Asignar puntuacion segun la clasificacion
 	private Map<String, Integer> setPuntuation(List<Point> points, List<Result> results){
 		
 		Map<String, Integer> puntuation = new HashMap<>();
 		
-		for(Integer i = 0; i<points.size(); i++) {
-			Result result = results.get(i);
-			
-			if(result != null) {
-				String clubName = result.getRunner().getClub().getName();
+		for(Integer i = 0; i<points.size(); i++) {		
+			if(results.size() > i) {
+				String clubName = results.get(i).getRunner().getClub().getName();
 				Integer clubPoints = points.get(i).getPuntuation();
 				
 				if(puntuation.containsKey(clubName))
