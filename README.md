@@ -125,15 +125,15 @@ Para obtener la clasificación de los corredores de la categoría master 20 orde
 # Algoritmo complejo
 Para la realización del algoritmo complejo se pidió obtener la clasificación de los clubs por puntos. Estos puntos son el resultado de la suma de puntos obtenidos por cada corredor en una prueba según el sistema de puntuaje de dicha prueba. Se ha realizado de dos formas diferentes:
 
-+ **Sin tener en cuenta las categorías:** los puntos se han repartido a los corredores sin tener en cuenta su categoría. El primero de la carrera ha obtenido elmáximo de puntos y así hacia abajo.
++ **Sin tener en cuenta las categorías:** los puntos se han repartido a los corredores sin tener en cuenta su categoría. El primero de la carrera ha obtenido el máximo de puntos y así hacia abajo.
 + **Teniendo en cuenta las categorías:** los puntos se han repartido a los corredores segun su categoría. Para categoría se ha realizado el reparto de puntos correspondientes. El primero de cada categoría obtiene el máximo de puntos y así hacia abajo.
 
 Los dos algoritmos guardan la información en un fichero llamado *clubs.txt* que se sitúa en la raíz del proyecto.
 
 ### Obtener la clasificación de los clubs por puntos sin tener en cuenta las categorías
 
-Para obtener la clasificación de los clubs sin tener en cuenta las categorías accedemos a */trial/{idTrial}clubClasi* mediante get.
+Para obtener la clasificación de los clubs sin tener en cuenta las categorías accedemos a */trial/{idTrial}/clubClasi* mediante get.
 
 ### Obtener la clasificación de los clubs por puntos teniendo en cuenta las categorías
 
-Para obtener la clasificación de los clubs teniendo en cuenta las categorías accedemos a */trial/{idTrial}clubClasiCat* mediante get.
+Para obtener la clasificación de los clubs teniendo en cuenta las categorías accedemos a */trial/{idTrial}/clubClasiCat* mediante get.
