@@ -1,6 +1,6 @@
 # Sistema de gestión de un club deportivo
 
-Aplicación Java usando el framwork Spring que realiza la gestión de un club deportivo. 
+Aplicación Java usando el framework Spring que realiza la gestión de un club deportivo. 
 
 ## Puesta a punto
 
