@@ -1,10 +1,6 @@
 package com.vmt.clubDeportivo.service;
 
-import java.io.File;
 import java.io.FileWriter;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +14,6 @@ import com.vmt.clubDeportivo.dto.ClubPointsDTO;
 import com.vmt.clubDeportivo.error.FileException;
 import com.vmt.clubDeportivo.error.NotFoundException;
 import com.vmt.clubDeportivo.mapper.ClubPointsMapper;
-import com.vmt.clubDeportivo.model.Club;
 import com.vmt.clubDeportivo.model.Point;
 import com.vmt.clubDeportivo.model.Result;
 import com.vmt.clubDeportivo.model.Trial;
@@ -129,7 +124,13 @@ public class TrialServiceImpl implements TrialService{
 		return puntuationList;
 	}
 	
-	//Utilizar los resultados de la prueba sin dividir por categorias
+	/**
+	 * Utilizar los resultados de la prueba sin dividir por categorias. Obtiene todos los puntos de los diferentes 
+	 * clubs sin tener en cuenta las categorias en los resultados.
+	 * @param points Sistema de puntuaje de la prueba ordenado por posicion.
+	 * @param trial La prueba.
+	 * @return Devuelve un Map que contiene los Clubs y sus puntos correspondientes.
+	 */
 	private Map<String, Integer> getPuntuation(List<Point> points, Trial trial){
 		//Resultados de la prueba sin dividir por categorias
 		List<Result> results = trial.getResults();
@@ -139,31 +140,42 @@ public class TrialServiceImpl implements TrialService{
 		return setPuntuation(points, results);
 	}
 	
-	//Utilizar los resultados de la prueba dividiendo por categorias
-		private Map<String, Integer> getPuntuationCat(List<Point> points, Trial trial){
-			
-			//Categoria master40
-			Map<String, Integer> puntuation = setPuntuation(points, this.getMaster(trial.getId(), 40));
-			 
-			//Categoria master30
-			Map<String, Integer> puntuationMaster30 = setPuntuation(points, this.getMaster(trial.getId(), 30));
-			//unir los dos maps
-			puntuationMaster30.forEach((k, v) -> {
-				puntuation.merge(k, v, (v1, v2) -> v1 += v2);
-			});
-			
-			//Categoria master20
-			Map<String, Integer> puntuationMaster20 = setPuntuation(points, this.getMaster(trial.getId(), 20));
-			//unir los dos maps
-			puntuationMaster20.forEach((k, v) -> {
-				puntuation.merge(k, v, (v1, v2) -> v1 += v2);
-			});
-			
-			
-			return puntuation;
-		}
+	/**
+	 * Utilizar los resultados de la prueba dividiendo por categorias. Obtiene todos los puntos de los diferentes 
+	 * clubs teniendo en cuenta las categorias en los resultados.
+	 * @param points Sistema de puntuaje de la prueba ordenado por posicion.
+	 * @param trial La prueba.
+	 * @return Devuelve un Map que contiene los Clubs y sus puntos correspondientes.
+	 */
+	private Map<String, Integer> getPuntuationCat(List<Point> points, Trial trial){
+		
+		//Categoria master40
+		Map<String, Integer> puntuation = setPuntuation(points, this.getMaster(trial.getId(), 40));
+		 
+		//Categoria master30
+		Map<String, Integer> puntuationMaster30 = setPuntuation(points, this.getMaster(trial.getId(), 30));
+		//unir los dos maps
+		puntuationMaster30.forEach((k, v) -> {
+			puntuation.merge(k, v, (v1, v2) -> v1 += v2);
+		});
+		
+		//Categoria master20
+		Map<String, Integer> puntuationMaster20 = setPuntuation(points, this.getMaster(trial.getId(), 20));
+		//unir los dos maps
+		puntuationMaster20.forEach((k, v) -> {
+			puntuation.merge(k, v, (v1, v2) -> v1 += v2);
+		});
+		
+		
+		return puntuation;
+	}
 	
-	//Asignar puntuacion segun la clasificacion
+	/**
+	 * Asignar puntuacion segun la clasificacion. Asigna puntos a los clubs segun los resultados.
+	 * @param points Sistema de puntuaje de la prueba.
+	 * @param results Lista de resultados.
+	 * @return Devuelve un Map con los Clubs y sus puntos.
+	 */
 	private Map<String, Integer> setPuntuation(List<Point> points, List<Result> results){
 		
 		Map<String, Integer> puntuation = new HashMap<>();
@@ -183,7 +195,10 @@ public class TrialServiceImpl implements TrialService{
 		return puntuation;
 	}
 	
-	//Guardar lista de clubs en un fichero
+	/**
+	 * Guardar lista de clubs y puntos en un fichero.
+	 * @param clubs Lista de clubs con sus puntos.
+	 */
 	private void writeFile(List<ClubPointsDTO> clubs) {
 		FileWriter file = null;
 		try {

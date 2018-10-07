@@ -45,7 +45,7 @@ public class RunnerController {
 	
 	@GetMapping("/{idRunner}")
 	public RunnerDTO findById(@PathVariable Integer idRunner) {
-		return mapper.mapToDTO(runnerService.findById(idRunner).orElseThrow(NotFoundException::new));
+		return mapper.mapToDTO(runnerService.findById(idRunner));
 	}
 	
 	@PostMapping
@@ -73,7 +73,7 @@ public class RunnerController {
 	
 	@GetMapping("/{idRunner}/club")
 	public ClubDTO getClubByRunner(@PathVariable Integer idRunner) {
-		final Runner runner = runnerService.findById(idRunner).orElseThrow(NotFoundException::new);
+		final Runner runner = runnerService.findById(idRunner);
 		
 		if(runner.getClub() == null) throw new NotFoundException(); 
 			

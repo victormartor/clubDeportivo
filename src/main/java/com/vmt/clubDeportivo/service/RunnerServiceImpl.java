@@ -1,7 +1,6 @@
 package com.vmt.clubDeportivo.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -26,8 +25,8 @@ public class RunnerServiceImpl implements RunnerService{
 	}
 
 	@Override
-	public Optional<Runner> findById(Integer id) {
-		return dao.findById(id);
+	public Runner findById(Integer id) {
+		return dao.findById(id).orElseThrow(NotFoundException::new);
 	}
 
 	@Override

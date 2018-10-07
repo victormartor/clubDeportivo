@@ -19,6 +19,4 @@ public class PointServiceImpl implements PointService{
 		return dao.findAll();
 	}
 	
-	
-	
 }

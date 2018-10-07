@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.vmt.clubDeportivo.dto.ResultDTO;
-import com.vmt.clubDeportivo.error.NotFoundException;
 import com.vmt.clubDeportivo.model.Result;
 import com.vmt.clubDeportivo.service.RunnerService;
 
@@ -21,7 +20,7 @@ public class ResultMapperImpl implements ResultMapper{
 	public Result mapToModel(ResultDTO dto) {
 		Result result = new Result();
 		result.setId(dto.getId());
-		result.setRunner(runnerService.findById(dto.getId_runner()).orElseThrow(NotFoundException::new));
+		result.setRunner(runnerService.findById(dto.getId_runner()));
 		result.setSeconds(dto.getSeconds());
 		return result;
 	}
