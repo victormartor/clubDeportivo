@@ -105,8 +105,8 @@ public class RunnerServiceTest {
 		//THEN
 		runnerServiceImpl.update(1, newRunner);
 		
-		assertEquals("Nuevo nombre", newRunner.getName());
-		assertEquals(new Integer(1995), newRunner.getYear());
+		verify(runnerDAO).findById(1);
+		verify(runnerDAO).save(newRunner);
 	}
 	
 	@Test(expected = NotFoundException.class)
@@ -124,6 +124,8 @@ public class RunnerServiceTest {
 		when(runnerDAO.findById(1)).thenReturn(Optional.ofNullable(storageRunner));
 		
 		runnerServiceImpl.delete(1);
+		
+		verify(runnerDAO).delete(storageRunner);
 	}
 	
 	@Test(expected = NotFoundException.class)
@@ -275,6 +277,10 @@ public class RunnerServiceTest {
 		
 		//THEN
 		runnerServiceImpl.updateClub(1, 1);
+		newRunner.setClub(storageClub);
+		
+		verify(runnerDAO).findById(1);
+		verify(runnerDAO).save(newRunner);
 	}
 	
 	@Test(expected = NotFoundException.class)
