@@ -206,9 +206,9 @@ public class TrialServiceImpl implements TrialService{
 			file = new FileWriter("clubs.txt");
 
 			// Escribimos linea a linea en el fichero
-			file.write("CLUB\tPUNTOS\n");
+			file.write("CLUB\tPUNTOS\r\n");
 			for(ClubPointsDTO c : clubs)
-				file.write(c.getName()+"\t"+c.getPoints()+"\n");
+				file.write(c.getName()+"\t"+c.getPoints()+"\r\n");
 
 			file.close();
 

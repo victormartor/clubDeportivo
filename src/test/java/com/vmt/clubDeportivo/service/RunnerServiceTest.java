@@ -4,10 +4,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,10 +13,9 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 
 import com.vmt.clubDeportivo.dao.RunnerDAO;
 import com.vmt.clubDeportivo.error.NotFoundException;
@@ -153,103 +150,7 @@ public class RunnerServiceTest {
 		Pageable pagination = PageRequest.of(0, 5);
 		
 		//WHEN
-		when(runnerDAO.findByNameContaining("", pagination)).thenReturn(new Page<Runner>() {
-			@Override
-			public List<Runner> getContent() {
-				// TODO Auto-generated method stub
-				return Arrays.asList(runnerA, runnerB);
-			}
-
-			@Override
-			public int getNumber() {
-				// TODO Auto-generated method stub
-				return 0;
-			}
-
-			@Override
-			public int getSize() {
-				// TODO Auto-generated method stub
-				return 0;
-			}
-
-			@Override
-			public int getNumberOfElements() {
-				// TODO Auto-generated method stub
-				return 0;
-			}
-
-			@Override
-			public boolean hasContent() {
-				// TODO Auto-generated method stub
-				return false;
-			}
-
-			@Override
-			public Sort getSort() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public boolean isFirst() {
-				// TODO Auto-generated method stub
-				return false;
-			}
-
-			@Override
-			public boolean isLast() {
-				// TODO Auto-generated method stub
-				return false;
-			}
-
-			@Override
-			public boolean hasNext() {
-				// TODO Auto-generated method stub
-				return false;
-			}
-
-			@Override
-			public boolean hasPrevious() {
-				// TODO Auto-generated method stub
-				return false;
-			}
-
-			@Override
-			public Pageable nextPageable() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public Pageable previousPageable() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public Iterator<Runner> iterator() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public int getTotalPages() {
-				// TODO Auto-generated method stub
-				return 0;
-			}
-
-			@Override
-			public long getTotalElements() {
-				// TODO Auto-generated method stub
-				return 0;
-			}
-
-			@Override
-			public <U> Page<U> map(Function<? super Runner, ? extends U> converter) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-		});
+		when(runnerDAO.findByNameContaining("", pagination)).thenReturn(new PageImpl<Runner>(Arrays.asList(runnerA, runnerB)));
 		
 		//THEN
 		List<Runner> returnedList = runnerServiceImpl.findAll(pagination, "");
