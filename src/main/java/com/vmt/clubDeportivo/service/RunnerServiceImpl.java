@@ -33,7 +33,6 @@ public class RunnerServiceImpl implements RunnerService{
 	public void update(Integer idRunner, Runner runnerToUpdate) {
 		dao.findById(idRunner).orElseThrow(NotFoundException::new);
 		dao.save(runnerToUpdate);
-		
 	}
 
 	@Override
@@ -48,7 +47,6 @@ public class RunnerServiceImpl implements RunnerService{
 
 	@Override
 	public void updateClub(Integer idRunner, Integer idClub) {
-		
 		Runner runner = dao.findById(idRunner).orElseThrow(NotFoundException::new);
 		runner.setClub(clubService.findById(idClub));
 		dao.save(runner);

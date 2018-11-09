@@ -20,7 +20,7 @@ import com.vmt.clubDeportivo.model.Club;
 @RunWith(MockitoJUnitRunner.class)
 public class ClubServiceTest {
 	
-	final private String NAME_CLUB = "Nombre prueba";
+	final private String NAME_CLUB = "Nombre club";
 	
 	@InjectMocks
 	private ClubServiceImpl clubServiceImpl;
@@ -54,7 +54,7 @@ public class ClubServiceTest {
 		storedClub.setId(1);
 		
 		//WHEN
-		when(clubDAO.findById(1)).thenReturn(Optional.of(storedClub));
+		when(clubDAO.findById(1)).thenReturn(Optional.ofNullable(storedClub));
 		
 		//THEN
 		final Club returnedClub = clubServiceImpl.findById(1);
@@ -66,7 +66,7 @@ public class ClubServiceTest {
 	@Test(expected = NotFoundException.class)
 	public void throwNotFoundWhenClubDoesntExist() {
 		//WHEN
-		when(clubDAO.findById(any(Integer.class))).thenThrow(new NotFoundException());
+		when(clubDAO.findById(any(Integer.class))).thenReturn(Optional.empty());
 		
 		//THEN
 		clubServiceImpl.findById(1);
